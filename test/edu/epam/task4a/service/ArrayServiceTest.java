@@ -30,7 +30,7 @@ public class ArrayServiceTest {
         NumbersArray numbersArray = new NumbersArray(1,4,6,8,2,6);
         NumbersArray expectedArray = new NumbersArray(8,6,6,4,2,1);
         ArrayService arrayService = new ArrayService();
-        NumbersArray actualArray = new NumbersArray(arrayService.shuttleSort(numbersArray.getNumbers()));
+        NumbersArray actualArray = new NumbersArray(arrayService.shellSort(numbersArray.getNumbers()));
         Assert.assertEquals(expectedArray,actualArray);
     }
 
