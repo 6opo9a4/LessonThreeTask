@@ -1,49 +1,6 @@
 package edu.epam.task4b.service;
 
 public class ArrayService {
-
-//    public int[] bubbleSort(int[] numbers){
-//        if(numbers.length<2) {
-//            throw new IllegalArgumentException("you must add more trains to sort");
-//        }
-//        else {
-//            int number1 = numbers[0];
-//            int number2 = numbers[1];
-//            boolean needIteration = true;
-//            if(number1<number2) {
-//                while (needIteration) {
-//                    needIteration = false;
-//                    for (int i = 1; i < numbers.length; i++) {
-//                        number1 = numbers[i];
-//                        number2 = numbers[i - 1];
-//                        if (number1 > number2) {
-//                            int tmp = number1;
-//                            numbers[i] = number2;
-//                            numbers[i-1] = tmp;
-//                            needIteration = true;
-//                        }
-//                    }
-//                }
-//            }
-//            else{
-//                while (needIteration) {
-//                    needIteration = false;
-//                    for (int i = 1; i < numbers.length; i++) {
-//                        number1 = numbers[i];
-//                        number2 = numbers[i - 1];
-//                        if (number1 < number2) {
-//                            int tmp = number1;
-//                            numbers[i] = number2;
-//                            numbers[i-1] = tmp;
-//                            needIteration = true;
-//                        }
-//                    }
-//                }
-//            }
-//            return numbers;
-//        }
-//    }
-
     public int[][] bubbleSortBySum(int[][] numbers){
         if(numbers.length<2) {
             throw new IllegalArgumentException("you must add more blocks to sort");
@@ -149,6 +106,20 @@ public class ArrayService {
         }
     }
 
+    public int[][] generateRandomArray(int size){
+        int number = (int) ( Math.random() * 10000);
+        int[][] generatedArray = new int[size][];
+        for (int i = 0;i<size;i++){
+            int blockSize = (int) ( Math.random() * 9 + 1);
+            int[] block = new int[blockSize];
+            for(int z =0;z<blockSize;z++){
+                block[z] = (int) ( Math.random() * 10000);
+            }
+            generatedArray[i] = block;
+        }
+        return generatedArray;
+    }
+
     private int[] blockSums(int i, int[][] numbers){
         int[] sums = new  int[2];
         int[] block1 = numbers[i-1];
@@ -226,19 +197,5 @@ public class ArrayService {
         int[] tmp = numbers[i];
         numbers[i] = numbers[i-1];
         numbers[i-1] = tmp;
-    }
-
-    public int[][] generateRandomArray(int size){
-        int number = (int) ( Math.random() * 10000);
-        int[][] generatedArray = new int[size][];
-        for (int i = 0;i<size;i++){
-            int blockSize = (int) ( Math.random() * 9 + 1);
-            int[] block = new int[blockSize];
-            for(int z =0;z<blockSize;z++){
-                block[z] = (int) ( Math.random() * 10000);
-            }
-            generatedArray[i] = block;
-        }
-        return generatedArray;
     }
 }

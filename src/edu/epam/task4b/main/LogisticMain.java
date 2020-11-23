@@ -13,5 +13,11 @@ public class LogisticMain {
         numbersArray = new NumbersArray(arrayService.generateRandomArray(10));
         ResultsReport report = new ResultsReport();
         report.numbersArrayOut(numbersArray);
+        NumbersArray numbersArray1 = new NumbersArray(arrayService.bubbleSortBySum(numbersArray.getNumbers()));
+        report.numbersArrayOut(numbersArray1);
+        NumbersArray numbersArray2 = new NumbersArray(arrayService.bubbleSortMax(numbersArray.getNumbers()));
+        report.numbersArrayOut(numbersArray2);
+        NumbersArray numbersArray3 = new NumbersArray(arrayService.bubbleSortMin(numbersArray.getNumbers()));
+        report.numbersArrayOut(numbersArray3);
     }
 }

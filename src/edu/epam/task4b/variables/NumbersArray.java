@@ -57,18 +57,6 @@ public class NumbersArray {
         }
     }
 
-
-    @Override
-    public int hashCode() {
-        int code = 1;
-        for(int i=0;i<numbers.length;i++) {
-            for(int z=0;z<numbers[i].length;z++) {
-                code = 3 * code + numbers[i][z];
-            }
-        }
-        return code;
-    }
-
     @Override
     public boolean equals(Object numbersArray) {
         if (this == numbersArray){
@@ -100,7 +88,7 @@ public class NumbersArray {
 
     @Override
     public String toString() {
-        String forOut = String.format("Numbers(%s): ",numbers.hashCode());
+        String forOut = String.format("Numbers: ");
         for(int i=0;i<numbers.length;i++) {
             forOut = String.format("%s \n %s" ,forOut,Arrays.toString(numbers[i]));
         }
