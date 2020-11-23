@@ -3,51 +3,69 @@ package edu.epam.task4b.variables;
 import java.util.Arrays;
 
 public class NumbersArray {
-    private int[] numbers;
+    private int[][] numbers;
 
-    public NumbersArray(int... numbers) {
+    public NumbersArray(){
+
+    }
+    public NumbersArray(int[][] numbers){
         this.numbers = numbers;
     }
 
-    public NumbersArray(int size) {
-        this.numbers = new int[size];
-    }
-
-    public int[] getNumbers() {
+    public int[][] getNumbers() {
         return numbers;
     }
 
-    public int getNumber(int numberOfNumber) {
-        if(numbers.length > numberOfNumber){
-            return numbers[numberOfNumber];
+    public int[] getBlock(int blockNumber){
+        int[][] numbers = this.numbers;
+        if(numbers.length>blockNumber){
+            return numbers[blockNumber];
         }
         else {
-            throw new IllegalArgumentException("Out of trains range");
+            throw new IllegalArgumentException("Out of arrays range");
+        }
+
+    }
+
+    public int getNumber(int blockNumber, int position){
+        int[][] numbers = this.numbers;
+        if(numbers.length>blockNumber && numbers[blockNumber].length>position){
+            return numbers[blockNumber][position];
+        }
+        else {
+            throw new IllegalArgumentException("Out of arrays range");
         }
     }
 
-    public void setNumbers(int[] numbers) {
+    public void setNumbers(int[][] numbers) {
         this.numbers = numbers;
     }
 
-    public void setNumber(int number) {
-        int newPosition = numbers.length;
-        this.numbers[newPosition] = number;
-    }
-
-    public void setNumberToPosition(int number,int position) {
-        if(numbers.length < position) {
-            this.numbers[position] = number;
+    public void setBlockNumbers(int[] numbers, int blockNumber){
+        if(numbers.length>blockNumber){
+            this.numbers[blockNumber] = numbers;
         }
     }
+
+    public void setNumber(int number, int blockNumber, int position){
+        int[][] numbers = this.numbers;
+        if(numbers.length>blockNumber && numbers[blockNumber].length>position){
+            this.numbers[blockNumber][position] = number;
+        }
+        else {
+            throw new IllegalArgumentException("Out of arrays range");
+        }
+    }
+
 
     @Override
     public int hashCode() {
         int code = 1;
         for(int i=0;i<numbers.length;i++) {
-            code = 17 * code + numbers[i];
+            for(int z=0;z<numbers[i].length;z++) {
+                code = 3 * code + numbers[i][z];
+            }
         }
-        code = code*numbers.length;
         return code;
     }
 
@@ -60,12 +78,19 @@ public class NumbersArray {
             return false;
         }
         NumbersArray arrayOfNumbers = (NumbersArray) numbersArray;
-        int[] firstNumbers =  arrayOfNumbers.numbers;
-        int[] secondNumbers = this.numbers;
+        int[][] firstNumbers =  arrayOfNumbers.numbers;
+        int[][] secondNumbers = this.numbers;
         if(firstNumbers.length == secondNumbers.length) {
             for (int i = 0;i<firstNumbers.length;i++){
-                if(firstNumbers[i]!=secondNumbers[i]) {
+                if(firstNumbers[i].length!=secondNumbers[i].length) {
                     return false;
+                }
+            }
+            for(int i=0;i<numbers.length;i++) {
+                for(int z=0;z<numbers[i].length;z++) {
+                    if(firstNumbers[i][z]!=secondNumbers[i][z]){
+                        return false;
+                    }
                 }
             }
             return true;
@@ -75,7 +100,10 @@ public class NumbersArray {
 
     @Override
     public String toString() {
-        String forOut = String.format("Numbers(%s) - %s",numbers.hashCode() ,Arrays.toString(numbers));
+        String forOut = String.format("Numbers(%s): ",numbers.hashCode());
+        for(int i=0;i<numbers.length;i++) {
+            forOut = String.format("%s \n %s" ,forOut,Arrays.toString(numbers[i]));
+        }
         return forOut;
     }
 }

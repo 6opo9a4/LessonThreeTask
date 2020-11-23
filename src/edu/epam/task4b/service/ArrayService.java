@@ -1,29 +1,63 @@
 package edu.epam.task4b.service;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Scanner;
-
 public class ArrayService {
 
-    public int[] bubbleSort(int[] numbers){
+//    public int[] bubbleSort(int[] numbers){
+//        if(numbers.length<2) {
+//            throw new IllegalArgumentException("you must add more trains to sort");
+//        }
+//        else {
+//            int number1 = numbers[0];
+//            int number2 = numbers[1];
+//            boolean needIteration = true;
+//            if(number1<number2) {
+//                while (needIteration) {
+//                    needIteration = false;
+//                    for (int i = 1; i < numbers.length; i++) {
+//                        number1 = numbers[i];
+//                        number2 = numbers[i - 1];
+//                        if (number1 > number2) {
+//                            int tmp = number1;
+//                            numbers[i] = number2;
+//                            numbers[i-1] = tmp;
+//                            needIteration = true;
+//                        }
+//                    }
+//                }
+//            }
+//            else{
+//                while (needIteration) {
+//                    needIteration = false;
+//                    for (int i = 1; i < numbers.length; i++) {
+//                        number1 = numbers[i];
+//                        number2 = numbers[i - 1];
+//                        if (number1 < number2) {
+//                            int tmp = number1;
+//                            numbers[i] = number2;
+//                            numbers[i-1] = tmp;
+//                            needIteration = true;
+//                        }
+//                    }
+//                }
+//            }
+//            return numbers;
+//        }
+//    }
+
+    public int[][] bubbleSortBySum(int[][] numbers){
         if(numbers.length<2) {
-            throw new IllegalArgumentException("you must add more trains to sort");
+            throw new IllegalArgumentException("you must add more blocks to sort");
         }
         else {
-            int number1 = numbers[0];
-            int number2 = numbers[1];
+            int[] sums = blockSums(1,numbers);
             boolean needIteration = true;
-            if(number1<number2) {
+            if(sums[0]>sums[1]) {
                 while (needIteration) {
                     needIteration = false;
                     for (int i = 1; i < numbers.length; i++) {
-                        number1 = numbers[i];
-                        number2 = numbers[i - 1];
-                        if (number1 > number2) {
-                            int tmp = number1;
-                            numbers[i] = number2;
-                            numbers[i-1] = tmp;
+                        sums = blockSums(i,numbers);
+                        if (sums[0] > sums[1]) {
+                            changePlaces(i,numbers);
                             needIteration = true;
                         }
                     }
@@ -33,12 +67,9 @@ public class ArrayService {
                 while (needIteration) {
                     needIteration = false;
                     for (int i = 1; i < numbers.length; i++) {
-                        number1 = numbers[i];
-                        number2 = numbers[i - 1];
-                        if (number1 < number2) {
-                            int tmp = number1;
-                            numbers[i] = number2;
-                            numbers[i-1] = tmp;
+                        sums = blockSums(i,numbers);
+                        if (sums[0] < sums[1]) {
+                            changePlaces(i,numbers);
                             needIteration = true;
                         }
                     }
@@ -48,53 +79,33 @@ public class ArrayService {
         }
     }
 
-    public int[] shuttleSort(int[] numbers){
+    public int[][] bubbleSortMax(int[][] numbers){
         if(numbers.length<2) {
-            throw new IllegalArgumentException("you must add more trains to sort");
+            throw new IllegalArgumentException("you must add more numbers to sort");
         }
         else {
-            int number1 = numbers[0];
-            int numbre2 = numbers[1];
-            if(number1 < numbre2) {
-                for (int i = 1; i < numbers.length; i++) {
-                    number1 = numbers[i];
-                    numbre2 = numbers[i - 1];
-                    if (number1 > numbre2) {
-                        int tmp = number1;
-                        numbers[i] = numbre2;
-                        numbers[i-1] = tmp;
-                        for (int z = i - 1; (z - 1) >= 0; z--) {
-                            number1 = numbers[z];
-                            numbre2 = numbers[z - 1];
-                            if (number1 > numbre2) {
-                                tmp = number1;
-                                numbers[z] = numbre2;
-                                numbers[z-1] = tmp;
-                            } else {
-                                break;
-                            }
+            int[] maxes = blocksMax(1,numbers);
+            boolean needIteration = true;
+            if(maxes[0] > maxes[1]) {
+                while (needIteration) {
+                    needIteration = false;
+                    for (int i = 1; i < numbers.length; i++) {
+                        maxes = blocksMax(i,numbers);
+                        if (maxes[0] > maxes[1]) {
+                            changePlaces(i,numbers);
+                            needIteration = true;
                         }
                     }
                 }
             }
             else{
-                for (int i = 1; i < numbers.length; i++) {
-                    number1 = numbers[i];
-                    numbre2 = numbers[i - 1];
-                    if (number1 < numbre2) {
-                        int tmp = number1;
-                        numbers[i] = numbre2;
-                        numbers[i-1] = tmp;
-                        for (int z = i - 1; (z - 1) >= 0; z--) {
-                            number1 = numbers[z];
-                            numbre2 = numbers[z - 1];
-                            if (number1 < numbre2) {
-                                tmp = number1;
-                                numbers[z] = numbre2;
-                                numbers[z-1] = tmp;
-                            } else {
-                                break;
-                            }
+                while (needIteration) {
+                    needIteration = false;
+                    for (int i = 1; i < numbers.length; i++) {
+                        maxes = blocksMax(i,numbers);
+                        if (maxes[0] < maxes[1]) {
+                            changePlaces(i,numbers);
+                            needIteration = true;
                         }
                     }
                 }
@@ -102,228 +113,132 @@ public class ArrayService {
             return numbers;
         }
     }
-    public int[] shellSort(int[] numbers){
+
+    public int[][] bubbleSortMin(int[][] numbers){
         if(numbers.length<2) {
-            throw new IllegalArgumentException("you must add more trains to sort");
+            throw new IllegalArgumentException("you must add more numbers to sort");
         }
         else {
-            int number1= numbers[0];
-            int number2 = numbers[1];
-            if(number1 > number2) {
-                int gap = numbers.length / 2;
-                while (gap >= 1) {
-                    for (int right = 0; right < numbers.length; right++) {
-                        for (int c = right - gap; c >= 0; c -= gap) {
-                            number1 = numbers[c];
-                            number2 = numbers[c+gap];
-                            if (numbers[c] > numbers[c + gap]) {
-                                int tmp = number1;
-                                numbers[c] = number2;
-                                numbers[c+gap] = tmp;
-                            }
+            int[] mines = blocksMin(1,numbers);
+            boolean needIteration = true;
+            if(mines[0] > mines[1]) {
+                while (needIteration) {
+                    needIteration = false;
+                    for (int i = 1; i < numbers.length; i++) {
+                        mines = blocksMin(i,numbers);
+                        if (mines[0] > mines[1]) {
+                            changePlaces(i,numbers);
+                            needIteration = true;
                         }
                     }
-                    gap = gap / 2;
                 }
             }
             else{
-                int gap = numbers.length / 2;
-                while (gap >= 1) {
-                    for (int right = 0; right < numbers.length; right++) {
-                        for (int c = right - gap; c >= 0; c -= gap) {
-                            number1 = numbers[c];
-                            number2 = numbers[c+gap];
-                            if (numbers[c] < numbers[c + gap]) {
-                                int tmp = number1;
-                                numbers[c] = number2;
-                                numbers[c+gap] = tmp;
-                            }
+                while (needIteration) {
+                    needIteration = false;
+                    for (int i = 1; i < numbers.length; i++) {
+                        mines = blocksMin(i,numbers);
+                        if (mines[0] < mines[1]) {
+                            changePlaces(i,numbers);
+                            needIteration = true;
                         }
                     }
-                    gap = gap / 2;
                 }
             }
             return numbers;
         }
     }
 
-    public int binarySearch(int numbers[], int elementToSearch) {
-        int firstPoint = 0;
-        int lastPoint = numbers.length - 1;
-        while(firstPoint <= lastPoint) {
-            int middlePoint = (firstPoint + lastPoint) / 2;
-            if (numbers[middlePoint] == elementToSearch) {
-                return numbers[middlePoint];
-            }
-            if (numbers[middlePoint] < elementToSearch){
-                firstPoint = middlePoint + 1;
-            }
-            if (numbers[middlePoint] > elementToSearch){
-                lastPoint = middlePoint - 1;
-            }
+    private int[] blockSums(int i, int[][] numbers){
+        int[] sums = new  int[2];
+        int[] block1 = numbers[i-1];
+        int[] block2 = numbers[i];
+        int sum1=0;
+        int sum2=0;
+        for(int z = 0;z<block1.length;z++){
+            sum1 = sum1 + block1[z];
         }
-        throw new IllegalArgumentException("No such element in array");
+        for(int z = 0;z<block2.length;z++){
+            sum2 = sum2 + block2[z];
+        }
+        sums[0] = sum1;
+        sums[1] = sum2;
+        return sums;
     }
 
-    public int minSearch(int[] numbers){
-        int min;
+    private int[] blocksMin(int z, int[][] numbers){
+        int min1;
+        int min2;
         if(numbers.length == 0){
             throw new IllegalArgumentException("Your array is empty");
         }
         else {
-            min = numbers[0];
-            for (int i = 0;i<numbers.length;i++)
+            min1 = numbers[z-1][0];
+            min2 = numbers[z][0];
+            for (int i = 0;i<numbers[z-1].length;i++)
             {
-                if(min>numbers[i]){
-                    min = numbers[i];
+                if(min1>numbers[z-1][i]){
+                    min1 = numbers[z-1][i];
+                }
+            }
+            for (int i = 0;i<numbers[z].length;i++)
+            {
+                if(min2>numbers[z][i]){
+                    min2 = numbers[z][i];
                 }
             }
         }
-        return min;
+        int[] mines = new int[2];
+        mines[0] = min1;
+        mines[1] = min2;
+        return mines;
     }
 
-    public int maxSearch(int[] numbers){
-        int max;
+    private int[] blocksMax(int z,int[][] numbers){
+        int max1;
+        int max2;
         if(numbers.length == 0){
             throw new IllegalArgumentException("Your array is empty");
         }
         else {
-            max = numbers[0];
-            for (int i = 0;i<numbers.length;i++)
+            max1 = numbers[z-1][0];
+            max2 = numbers[z][0];
+            for (int i = 0;i<numbers[z-1].length;i++)
             {
-                if(max<numbers[i]){
-                    max = numbers[i];
+                if(max1<numbers[z-1][i]){
+                    max1 = numbers[z-1][i];
                 }
             }
-        }
-        return max;
-    }
-
-    public int[] isPrime(int[] numbers) {
-        ArrayList<Integer> primeNumbers = new ArrayList<>();
-        if(numbers.length == 0){
-            throw new IllegalArgumentException("Your array is empty");
-        }
-        else {
-            for(int z = 0;z<numbers.length;z++)
+            for (int i = 0;i<numbers[z].length;i++)
             {
-                if (numbers[z]%2!=0){
-                    for(int i=3;i<=numbers[z];i+=2) {
-                        if (numbers[z] % i != 0 || numbers[z] == i) {
-                            primeNumbers.add(numbers[z]);
-                        }
-                        break;
-                    }
+                if(max2<numbers[z][i]){
+                    max2 = numbers[z][i];
                 }
             }
         }
-        int[] primeResult = fromArray(primeNumbers);
-        return primeResult;
+        int[] mines = new int[2];
+        mines[0] = max1;
+        mines[1] = max2;
+        return mines;
     }
 
-    public int[] fibonacciNumbers(int[] numbers){
-        if(numbers.length == 0){
-            throw new IllegalArgumentException("Your array is empty");
-        }
-        int maxElement = maxSearch(numbers);
-        ArrayList<Integer> fibonacci =  new ArrayList<>();
-        ArrayList<Integer> fibonacciFromNumbers = new ArrayList<>();
-        int n0 = 1;
-        int n1 = 1;
-        int n2=1;
-        fibonacci.add(n0);
-        do{
-            n2=n0+n1;
-            fibonacci.add(n2);
-            n0=n1;
-            n1=n2;
-        } while (n2<maxElement);
-        for (int i=0;i<numbers.length;i++){
-            for(int z = 0;z<fibonacci.size();z++){
-                if(numbers[i]==fibonacci.get(z)){
-                    fibonacciFromNumbers.add(numbers[i]);
-                }
-            }
-        }
-        int[] fibonacciResult = fromArray(fibonacciFromNumbers);
-        return fibonacciResult;
+    private void changePlaces(int i, int[][] numbers){
+        int[] tmp = numbers[i];
+        numbers[i] = numbers[i-1];
+        numbers[i-1] = tmp;
     }
 
-    public int[] threeDigitWithoutRepeats(int[] numbers){
-        if(numbers.length == 0){
-            throw new IllegalArgumentException("Your array is empty");
-        }
-        ArrayList<Integer> resultList =  new ArrayList<>();
-        int[] result;
-        for(int i = 0;i<numbers.length;i++){
-            if(numbers[i]/100>0 && numbers[i]/100<10){
-                String number = Integer.toString(numbers[i]);
-                char[] digitsOfNumber = number.toCharArray();
-                if(digitsOfNumber[0]!=digitsOfNumber[1] && digitsOfNumber[0]!=digitsOfNumber[2] && digitsOfNumber[1]!=digitsOfNumber[2]){
-                    resultList.add(numbers[i]);
-                }
-            }
-        }
-        result = fromArray(resultList);
-        return result;
-    }
-
-    public int[] generateRandomArray(){
-        int size = (int) ( Math.random() * 101);
-        int[] generatedArray = new int[size];
+    public int[][] generateRandomArray(int size){
+        int number = (int) ( Math.random() * 10000);
+        int[][] generatedArray = new int[size][];
         for (int i = 0;i<size;i++){
-            int number = (int) ( Math.random() * 10000);
-            generatedArray[i] = number;
+            int blockSize = (int) ( Math.random() * 9 + 1);
+            int[] block = new int[blockSize];
+            for(int z =0;z<blockSize;z++){
+                block[z] = (int) ( Math.random() * 10000);
+            }
+            generatedArray[i] = block;
         }
         return generatedArray;
-    }
-
-    public int[] takeArrayFromKeyboard(){
-        int[] tookArray;
-        int i = 0;
-        Scanner in = new Scanner(System.in);
-        System.out.print("Введите размер массива: ");
-        tookArray =new int[in.nextInt()];
-        for (int element : tookArray)
-        {
-            System.out.print("Введите " + (i + 1) + "-й элемент массива: ");
-            tookArray[i] = in.nextInt();
-            System.out.println(tookArray[i] + ";");
-            i++;
-        }
-        return tookArray;
-    }
-
-    public void writeToFile (String filename,int[] numbers) throws IOException {
-        BufferedWriter outputWriter;
-        outputWriter = new BufferedWriter(new FileWriter(filename+".txt"));
-        outputWriter.write("");
-        for (int i = 0; i < numbers.length; i++) {
-            outputWriter.write(Integer.toString(numbers[i]));
-            outputWriter.newLine();
-        }
-        outputWriter.flush();
-        outputWriter.close();
-    }
-
-    public int[] readFromFile(String filename) throws FileNotFoundException {
-        Scanner s = new Scanner(new File(filename + ".txt"));
-        int[] numbers;
-        ArrayList<Integer> arrayOfNumbers = new ArrayList<>();
-        while (s.hasNext()){
-           arrayOfNumbers.add(s.nextInt());
-        }
-        numbers = fromArray(arrayOfNumbers);
-        return numbers;
-    }
-
-    private int[] fromArray(ArrayList<Integer> initNumbers){
-        int[] intResult = new int[initNumbers.size()];
-        for(int i = 0; i < initNumbers.size(); i++) {
-            if (initNumbers.get(i) != null) {
-                intResult[i] = initNumbers.get(i);
-            }
-        }
-        return intResult;
     }
 }

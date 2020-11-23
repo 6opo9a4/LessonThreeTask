@@ -8,7 +8,7 @@ public class ArrayService {
 
     public int[] bubbleSort(int[] numbers){
         if(numbers.length<2) {
-            throw new IllegalArgumentException("you must add more trains to sort");
+            throw new IllegalArgumentException("you must add more numbers to sort");
         }
         else {
             int number1 = numbers[0];
@@ -50,7 +50,7 @@ public class ArrayService {
 
     public int[] shuttleSort(int[] numbers){
         if(numbers.length<2) {
-            throw new IllegalArgumentException("you must add more trains to sort");
+            throw new IllegalArgumentException("you must add more numbers to sort");
         }
         else {
             int number1 = numbers[0];
@@ -104,7 +104,7 @@ public class ArrayService {
     }
     public int[] shellSort(int[] numbers){
         if(numbers.length<2) {
-            throw new IllegalArgumentException("you must add more trains to sort");
+            throw new IllegalArgumentException("you must add more numbers to sort");
         }
         else {
             int number1= numbers[0];
