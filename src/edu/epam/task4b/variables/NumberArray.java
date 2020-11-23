@@ -2,13 +2,13 @@ package edu.epam.task4b.variables;
 
 import java.util.Arrays;
 
-public class NumbersArray {
+public class NumberArray {
     private int[][] numbers;
 
-    public NumbersArray(){
+    public NumberArray(){
 
     }
-    public NumbersArray(int[][] numbers){
+    public NumberArray(int[][] numbers){
         this.numbers = numbers;
     }
 
@@ -65,7 +65,7 @@ public class NumbersArray {
         if (numbersArray == null || getClass() != numbersArray.getClass()){
             return false;
         }
-        NumbersArray arrayOfNumbers = (NumbersArray) numbersArray;
+        NumberArray arrayOfNumbers = (NumberArray) numbersArray;
         int[][] firstNumbers =  arrayOfNumbers.numbers;
         int[][] secondNumbers = this.numbers;
         if(firstNumbers.length == secondNumbers.length) {
